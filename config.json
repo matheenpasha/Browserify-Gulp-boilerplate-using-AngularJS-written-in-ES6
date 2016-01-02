@@ -1,0 +1,12 @@
+{
+  "entryFile": "./app/src/scripts/main.js",
+  "outputDir": "./app/build/scripts/",
+  "minifiedDir": "./app/build/minified/",
+  "outputFile": "app.js",
+  "server": {
+    "openBrowser": false
+  },
+  "browserify": {
+    "debug": false
+  }
+}

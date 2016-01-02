@@ -1,0 +1,104 @@
+
+//----------------- variables
+@grey: #e6e6e6;
+@dark-grey: #999;
+@light-grey: #f0f0f0;
+
+//-------------------- mixins
+
+.b {
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+}
+
+.c {
+  &:before {
+    display: table;
+    content: "";
+  }
+  &:after {
+    display: table;
+    content: "";
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.transition-all(@transition) {
+  -webkit-transition: all @transition ease-in-out;
+  -moz-transition: all @transition ease-in-out;
+  -o-transition: all @transition ease-in-out;
+  transition: all @transition ease-in-out;
+}
+
+.animate(@name, @duration, @delay, @fx, @fill-mode) {
+  -webkit-animation-name: @name;
+  -moz-animation-name: @name;
+  -o-animation-name: @name;
+  animation-name: @name;
+  -webkit-animation-duration: @duration;
+  animation-duration: @duration;
+  -webkit-animation-delay: @delay;
+  animation-delay: @delay;
+  -webkit-animation-timing-function: @fx;
+  animation-timing-function: @fx;
+  -webkit-animation-fill-mode: @fill-mode;
+  animation-fill-mode: @fill-mode;
+}
+
+@-webkit-keyframes fadeIn {
+  from { opacity:0; } to { opacity:1; }
+}
+@-moz-keyframes fadeIn {
+  from { opacity:0; } to { opacity:1; }
+}
+@keyframes fadeIn {
+  from { opacity:0; } to { opacity:1; }
+}
+.fade-in {
+  .animate(fadeIn, 0.3s, 0.3s, ease-in-out, both);
+}
+
+
+@-webkit-keyframes fadeOut {
+  from { opacity:1; } to { opacity:0; }
+}
+@-moz-keyframes fadeOut {
+  from { opacity:1; } to { opacity:0; }
+}
+@keyframes fadeOut {
+  from { opacity:1; } to { opacity:0; }
+}
+.fade-out {
+  .animate(fadeOut, 0.3s, 0.3s, ease-in-out, both);
+}
+
+.standard { font-size:16px; }
+.small-text { font-size:15px; }
+.smaller-text { font-size:14px; }
+.xsmall-text { font-size:13px; }
+.ultra-small-text { font-size:12px; }
+
+//----------------------- actual styling
+
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#page {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.content-width {
+    min-width:283px;
+    max-width:1140px;
+    margin: 0 auto;
+    height:100%;
+    box-shadow: 0 0 15px rgba(0,0,0,.35);
+}

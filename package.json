@@ -1,0 +1,55 @@
+{
+  "name": "ConnectDashBoard",
+  "version": "0.0.0",
+  "licence": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel": "~6.3.13",
+    "babel-preset-es2015": "~6.3.13",
+    "babelify": "^6.1.2",
+    "browserify": "~12.0.1",
+    "browserify-shim": "~3.8.11",
+    "del": "~2.2.0",
+    "gulp": "~3.9.0",
+    "gulp-autoprefixer": "~3.1.0",
+    "gulp-changed": "~1.1.1",
+    "gulp-concat": "~2.6.0",
+    "gulp-imagemin": "2.1.0",
+    "gulp-jshint": "~1.9.2",
+    "gulp-less": "latest",
+    "gulp-livereload": "~3.8.1",
+    "gulp-minify-css": "latest",
+    "gulp-server-livereload": "^1.5.4",
+    "gulp-strip-debug": "1.1.0",
+    "gulp-uglify": "^1.5.1",
+    "lodash": "^3.10.1",
+    "run-sequence": "^1.1.5",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "browserify": {
+    "transform": [["babelify", {"sourceMapRelative": "./app/src"}], "browserify-shim"]
+  },
+  "browser": {
+    "angular": "./app/src/scripts/lib/angular.min.js",
+    "ngRoute": "./app/src/scripts/lib/angular-route.min.js"
+  },
+  "browserify-shim": {
+    "angular": {
+      "exports": "angular"
+    },
+    "ngRoute": {
+      "depends": ["angular"],
+      "exports": "null"
+    }
+  },
+  "engines": {
+    "node": ">=4.2.4"
+  },
+  "scripts": {
+    "test": "gulp test"
+  }
+}
