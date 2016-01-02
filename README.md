@@ -8,3 +8,14 @@ module and usage of nodeJS style require/exports.
 
 
 ##Usage
+
+```js
+ npm install
+```
+
+```js
+ npm install -g gulp
+```
+```js
+ gulp serve
+```
