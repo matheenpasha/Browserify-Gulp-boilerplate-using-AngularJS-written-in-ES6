@@ -1,7 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 
-; require("/Users/Mat/Documents/Boilerplate/app/src/scripts/lib/angular.min.js");
+; require("C:\\Mat\\boilerplate\\app\\src\\scripts\\lib\\angular.min.js");
 ; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*
  AngularJS v1.4.8
@@ -116,7 +116,7 @@
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/Users/Mat/Documents/Boilerplate/app/src/scripts/lib/angular.min.js":2}],2:[function(require,module,exports){
+},{"C:\\Mat\\boilerplate\\app\\src\\scripts\\lib\\angular.min.js":2}],2:[function(require,module,exports){
 (function (global){
 ; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*
@@ -180,39 +180,147 @@ module.exports = function () {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./controllers":5,"./directives":6,"./routes":7,"./services":8,"angular":2,"ngRoute":1}],5:[function(require,module,exports){
+},{"./controllers":5,"./directives":7,"./routes":10,"./services":11,"angular":2,"ngRoute":1}],5:[function(require,module,exports){
 
 //register all controllers here
-"use strict";
+'use strict';
 
 exports.init = function (module) {
   console.log("controllers initialised");
+  module.controller('TestCtrl', require('./test').testCtrl);
 };
 
-},{}],6:[function(require,module,exports){
+},{"./test":6}],6:[function(require,module,exports){
+"use strict";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var TestController = function TestController($scope) {
+  _classCallCheck(this, TestController);
+
+  console.log('hello');
+  $scope.message = "hello";
+};
+
+TestController.$inject = ["$scope"];
+
+exports.testCtrl = TestController;
+
+},{}],7:[function(require,module,exports){
 
 //register all directives here
-"use strict";
+'use strict';
 
 exports.init = function (module) {
   console.log("directives initialised");
+  module.directive('tabs', require('./tabs').tabs);
+  module.directive('pane', require('./tabPane').pane);
 };
 
-},{}],7:[function(require,module,exports){
+},{"./tabPane":8,"./tabs":9}],8:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Pane = (function () {
+  function Pane() {
+    _classCallCheck(this, Pane);
+
+    this.require = '^tabs';
+    this.restrict = 'E';
+    this.transclude = true;
+    this.scope = {
+      title: '@'
+    };
+    this.templateUrl = '../app/build/templates/pane.html';
+  }
+
+  _createClass(Pane, [{
+    key: 'link',
+    value: function link(scope, element, attrs, tabsCtrl) {
+      tabsCtrl.addPane(scope);
+    }
+  }], [{
+    key: 'paneFactory',
+    value: function paneFactory() {
+      Pane.instance = new Pane();
+      return Pane.instance;
+    }
+  }]);
+
+  return Pane;
+})();
+
+exports.pane = Pane.paneFactory;
+
+},{}],9:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Tabs = (function () {
+  function Tabs() {
+    _classCallCheck(this, Tabs);
+
+    this.restrict = 'E';
+    this.transclude = true;
+    this.scope = {};
+    this.templateUrl = '../app/build/templates/tabs.html';
+    this.controller.$inject = ['$scope'];
+  }
+
+  _createClass(Tabs, [{
+    key: 'controller',
+    value: function controller($scope) {
+      var panes = $scope.panes = [];
+
+      $scope.select = function (pane) {
+        angular.forEach(panes, function (otherPane) {
+          otherPane.selected = false;
+        });
+        pane.selected = true;
+      };
+
+      this.addPane = function (pane) {
+        if (panes.length === 0) {
+          $scope.select(pane);
+        }
+        panes.push(pane);
+      };
+    }
+  }], [{
+    key: 'tabsFactory',
+    value: function tabsFactory() {
+      Tabs.instance = new Tabs();
+      return Tabs.instance;
+    }
+  }]);
+
+  return Tabs;
+})();
+
+exports.tabs = Tabs.tabsFactory;
+
+},{}],10:[function(require,module,exports){
 // angular inner routing configuration to route to various views in a single page app.
 
 'use strict';
 
 module.exports = function ($routeProvider) {
-    $routeProvider.when('/test', {
-        templateUrl: '/app/src/views/dash-board.html',
-        controller: 'TestCtrl'
+    $routeProvider.when('/', {
+        templateUrl: '/app/src/scripts/templates/home.html',
+        controller: 'TestCtrl',
+        controllerAs: 'home'
     }).otherwise({
         redirectTo: '/'
     });
 };
 
-},{}],8:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 
 //register all service factories here
 'use strict';

@@ -6,7 +6,6 @@
 // include gulp and all the plug-ins
 
 
-// var changed = require('gulp-changed');
 // var imagemin = require('gulp-imagemin');
 
 //var karma = require('karma').server;
@@ -27,7 +26,7 @@ var concat = require('gulp-concat');
 var runSequence = require('run-sequence');
 var less = require('gulp-less');
 var autoprefix = require('gulp-autoprefixer');
-var minifyCSS = require('gulp-minify-css');
+var cssnano = require('gulp-cssnano');
 
 //get the config file
 var config = require('./config');
@@ -82,7 +81,7 @@ gulp.task('less', ['clean-styles'], function (){
     .pipe(less())
     .pipe(concat('main.css'))
     .pipe(autoprefix('last 2 versions'))
-    .pipe(minifyCSS())
+    .pipe(cssnano())
     .pipe(gulp.dest('./app/build/styles/'));
 });
 
@@ -111,7 +110,13 @@ gulp.task('build', function(cb) {
               'clean-min',
               'bundle-scripts',
               'minify-scripts',
+              'minify-tmpl',
               cb);
+});
+
+gulp.task('minify-tmpl', function() {
+  return gulp.src('./app/src/scripts/templates/*.html')
+    .pipe(gulp.dest('./app/build/templates'));
 });
 
 // a simple server for testing the front end code
@@ -161,6 +166,7 @@ gulp.task('clean-images', function (cb){
 gulp.task('watch', function (){
   gulp.watch('./app/src/scripts/**/*.js', ['build-scripts']);
   //gulp.watch('./src/images/**/*', ['compressImages']);
+  gulp.watch('./app/src/scripts/templates/*.html', ['minify-tmpl']);
   gulp.watch('./app/src/styles/*.less', ['less']);
 });
 

@@ -2,9 +2,10 @@
 
 module.exports = function ($routeProvider) {
        $routeProvider
-           .when('/test', {
-               templateUrl: '/app/src/views/dash-board.html',
-               controller: 'TestCtrl'
+           .when('/', {
+               templateUrl: '/app/src/scripts/templates/home.html',
+               controller: 'TestCtrl',
+               controllerAs: 'home'
            })
            .otherwise({
                redirectTo: '/'
